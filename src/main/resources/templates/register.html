@@ -12,6 +12,106 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-
+    <div class="contanier">
+        <div class="row">
+            <div class="col-2"></div> <!-- 여백 -->
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>영화정보 등록</h2>
+                        <!-- Controller에 multipart 선언시 전송에서 multipart 지원 -->
+                        <form th:action="@{/register}" method="post" enctype="multipart/form-data">
+                            <table class="table">
+                                <!-- DTO를 참고해서 -->
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 15%">영화제목 :</td>
+                                        <td style="width: 85%">
+                                            <input type="text" style="width: 500px" class="form-control" name="name" placeholder="영화제목을 입력하세요.">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">영화감독 :</td>
+                                        <td style="width: 85%">
+                                            <input type="text" style="width: 500px" class="form-control" name="director" placeholder="영화감독을 입력해주세요">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">제작국가 :</td>
+                                        <td style="width: 85%"> <!-- 동일한 내용을 다른 값으로 입력할 수 있을 때 select로 통합 -->
+                                            <select class="form-select" style="width: 500px" name="nation">
+                                                <option value="한국">한국</option>
+                                                <option value="미국">미국</option>
+                                                <option value="영국">영국</option>
+                                                <option value="캐나다">캐나다</option>
+                                                <option value="호주">호주</option>
+                                                <option value="아프리카">아프리카</option>
+                                                <option value="인도">인도</option>
+                                                <option value="스리랑카">스리랑카</option>
+                                                <option value="태국">태국</option>
+                                                <option value="중국">중국</option>
+                                                <option value="일본">일본</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">장르 :</td>
+                                        <td style="width: 85%">
+                                            <select class="form-select" style="width: 500px" name="genre">
+                                                <option value="SF">SF</option>
+                                                <option value="액션">액션</option>
+                                                <option value="로맨스">로맨스</option>
+                                                <option value="코디미">코디미</option>
+                                                <option value="가족영화">가족영화</option>
+                                                <option value="드라마">드라마</option>
+                                                <option value="판타지">판타지</option>
+                                                <option value="다큐멘터리">다큐멘터리</option>
+                                                <option value="스릴러">스릴러</option>
+                                                <option value="공포">공포</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">주연 :</td>
+                                        <td style="width: 85%">
+                                            <input type="text" style="width: 500px" class="form-control" name="actor" placeholder="주연배우를 입력해주세요">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">개봉일 :</td>
+                                        <td style="width: 85%">
+                                            <input type="date" style="width: 500px" class="form-control" name="opendate">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">영화소개 :</td>
+                                        <td style="width: 85%">
+                                            <textarea style="width: 500px" rows="5" class="form-control" name="synopsis" placeholder="영화소개를 입력해주세요"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%">영화포스터파일 :</td>
+                                        <td style="width: 85%">
+                                            <!--
+                                             여기서 name 속성은
+                                             Controller에 변수 MultipartFile imagefile 이름과 동일하게 맞춰야 한다.
+                                             DTO에 poster 와는 아무상관 없음
+                                             -->
+                                            <input type="file" style="width: 500px" class="form-control" name="imagefile">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary">등록</button>&nbsp;&nbsp;
+                                <button type="reset" class="btn btn-secondary">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2"></div> <!-- 여백 -->
+        </div>
+    </div>
 </body>
 </html>

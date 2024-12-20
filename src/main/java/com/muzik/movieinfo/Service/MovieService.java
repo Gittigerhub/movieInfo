@@ -4,6 +4,7 @@ import com.muzik.movieinfo.DTO.MovieDTO;
 import com.muzik.movieinfo.Entity.MovieEntity;
 import com.muzik.movieinfo.Repository.MovieRepository;
 import com.muzik.movieinfo.Util.FileUpload;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -37,6 +38,7 @@ public class MovieService {
         출력 : 해당 데이터들(list)과 page정보를 전달
         설명 : 요청한 페이지번호에 해당하는 데이터를 조회해서 전달
     ---------------------------------------------------------- */
+    // @Operation(summary = "영화 목록 조회", description = "페이지번호를 이용한 영화 정보를 조회한다.")
     public Page<MovieDTO> list(Pageable page) {
 
         // 1. 페이지정보를 재가공
@@ -86,13 +88,13 @@ public class MovieService {
         출력 : 없음, 만약 MovieEntity를 사용한 경우 저장한 레코드 전달
         설명 : 전달받은 데이터를 데이터베이스에 저장
     -------------------------------------------------------------------------- */
-    public void insert(MovieDTO movieDTO, MultipartFile poster) {
+    public void insert(MovieDTO movieDTO, MultipartFile imagefile) {
 
         // 1. 변환
         MovieEntity movieEntity = modelMapper.map(movieDTO, MovieEntity.class);
 
         // 2. 이미지 파일 저장
-        String newImageName = fileUpload.FileUpload(imgLocation, poster);
+        String newImageName = fileUpload.FileUpload(imgLocation, imagefile);
         movieEntity.setPoster(newImageName);        // 새로운 파일명으로 변경
 
         movieRepository.save(movieEntity);

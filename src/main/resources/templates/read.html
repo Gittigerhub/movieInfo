@@ -12,6 +12,90 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
+<div class="contanier">
+    <div class="row">
+        <div class="col-2"></div> <!-- 여백 -->
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2>영화정보 상세보기</h2>
+                    <!-- Controller에 multipart 선언시 전송에서 multipart 지원 -->
+                    <table class="table">
+                        <!-- DTO를 참고해서 -->
+                        <tbody>
+                        <tr>
+                            <!-- Controller에서 전달되는 변수확인 -->
+                            <!-- model.addAttribute("movieDTO", ) -->
+                            <td style="width: 30%"> <!-- 영화 포스터 -->
+                                <th:block th:if="${movieDTO.poster == null}"> <!-- 그림파일이 없으면 출력 -->
+                                    <img src="images/no_image.jpg" width="250px" height="200px">
+                                </th:block>
+                                <th:block th:unless="${movieDTO.poster == null}"> <!-- 그림파일이 있으면 출력 -->
+                                    <img th:src="@{/upload/} + ${movieDTO.poster}" width="250px" height="200px">
+                                </th:block>
+                            </td>
 
+                            <td style="width: 70%"> <!-- 영화 정보 -->
+                                <h3 class="py-3">[[${movieDTO.name}]]</h3>
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td>주연배우 :</td>
+                                            <td>
+                                                [[${movieDTO.actor}]]
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>영화감독 :</td>
+                                            <td>
+                                                [[${movieDTO.director}]]
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>개봉일 :</td>
+                                            <td>
+                                                <input type="date" th:value="${movieDTO.opendate}" style="border-width: 0; outline: none" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>장르 :</td> <!-- 태그추가로 복잡해진다. -->
+                                            <td>
+                                                [[${movieDTO.genre}]]
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>제작국가 :</td> <!-- 태크는 단순한데, 전체적인 구성확인 불가능 -->
+                                            <td>
+                                                [[${movieDTO.nation}]]
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>영화소개 :</td>
+                                            <td>
+                                                <textarea rows="5" cols="30" style="border-width: 0; outline: none" readonly>[[${movieDTO.synopsis}]]</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/modify(code=${movieDTO.code})}" class="btn btn-primary">수정</a>&nbsp;&nbsp;
+                        <a th:href="@{/remove(code=${movieDTO.code})}" class="btn btn-danger">삭제</a>
+                    </div>
+                    <!--
+                        -기획-
+                        개인이 사용하는 메뉴는 상세보기에서 수정 및 삭제 기능
+                        관리자가 사용하는 메뉴는 목록에서 수정 및 삭제 기능
+                        목록에 체크상자를 이용해서 한번에 여러개를 동시에 삭제
+                    -->
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div> <!-- 여백 -->
+    </div>
+</div>
 </body>
 </html>

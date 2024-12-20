@@ -21,9 +21,9 @@ public class FileUpload {
         출력 : 저장 후 생성된 새로운 파일명
         설명 : 이미지 파일을 새로운 이름으로 지정된 폴더에 저장하고 새로운 이름을 전달
     ---------------------------------------------------------------------------- */
-    public String FileUpload(String imgLocation, MultipartFile imageFile) {
+    public String FileUpload(String imgLocation, MultipartFile imagefile) {
         // 이미지파일에 파일명을 읽어온다. sample.jpg
-        String originalFilename = imageFile.getOriginalFilename();
+        String originalFilename = imagefile.getOriginalFilename();
         // 확장자만 분리 .jpg
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         UUID uuid = UUID.randomUUID();                  // 난수로 이름을 생성
@@ -34,12 +34,12 @@ public class FileUpload {
 
         // 외부작업은 반드시 try~catch로 예외처리
         try {                                                   // 정상적인 작업은 이곳에서 작업한다.
-            File folder = new File(path);                       // 작업할 파일지정, c:/movie/341-32ffw-33.jpg
+            File folder = new File(imgLocation);                // 작업할 파일지정, c:/movie/341-32ffw-33.jpg
             if (!folder.exists()) {                             // 지정된 위치에 폴더가 없으면, /movie/
                 boolean result = folder.mkdir();                // 지정된 위치에 폴더를 생성, /movie/
             }
 
-            byte[] filedata = imageFile.getBytes();             // sample.jpg파일을 바이트단위로 읽어서 저장
+            byte[] filedata = imagefile.getBytes();             // sample.jpg파일을 바이트단위로 읽어서 저장
 
             // 실제 파일처리하는 부분은 아래 3줄, 나머지는 이 3줄을 위한 사전작업
             FileOutputStream fos = new FileOutputStream(path);  // c:/movie/341-32ffw-33.jpg파일을 쓰기파일로 열기

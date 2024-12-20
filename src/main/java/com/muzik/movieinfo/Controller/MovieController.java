@@ -31,8 +31,10 @@ public class MovieController {
     // 등록
     @Operation(summary = "등록폼", description = "등록폼 페이지로 이동한다.")
     @GetMapping("/register")
-    public String registerHTML() {
-
+    public String registerHTML(Model model) {
+        // 검증처리가 필요하면 빈 MovieDTO를 생성해서 전달합니다.
+        // 입력폼에도 무조건 Object+Field로 구성해야 한다.
+        model.addAttribute("movieDTO", new MovieDTO());
         return "register";
     }
 
@@ -76,8 +78,8 @@ public class MovieController {
     @GetMapping({"/list", "/", "index"})
     public String listServiceHTML(@PageableDefault(page = 1) Pageable page, Model model) {
         Page<MovieDTO> movieDTOS = movieService.list(page);
-        Map<String, Integer> pageInfo = pageNationUtil.Pagination(movieDTOS);
-        model.addAttribute("movieDTOS", pageInfo);
+        Map<String, Integer> pageInfo = pageNationUtil.pagination(movieDTOS);
+        model.addAttribute("movieDTOS", movieDTOS);
         model.addAllAttributes(pageInfo);
 
         return "list";

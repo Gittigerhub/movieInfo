@@ -11,7 +11,7 @@ import java.util.Map;
 @Component
 public class PageNationUtil {
 
-    public static Map<String, Integer> Pagination(Page<?> page) {
+    public static Map<String, Integer> pagination(Page<?> page) {
         Map<String, Integer> map = new HashMap<>();         // 결과를 저장할 변수
 
         // 전체 레코드 수
@@ -22,6 +22,7 @@ public class PageNationUtil {
 
         int currentPage = page.getNumber()+1;                // 현제페이지 번호
         int blockLimit = 10;                                 // 화면에 출력할 페이지번호의 수(1,2,3,4,...,10)
+        int totalPages = page.getTotalPages();               //전체페이지 수
 
         // Math.max(값,값,값,...) : 값들 중 최대값을 추출
         // 계산된 페이지번호가 1보다 작으면 1을적용, 크면 해당페이지번호를 시작페이지 번호로 적용
@@ -43,6 +44,7 @@ public class PageNationUtil {
         map.put("endPage", endPage);
         map.put("nextPage", nextPage);
         map.put("lastPage", lastPage);
+        map.put("totalPages", totalPages);
 
         return map;
 

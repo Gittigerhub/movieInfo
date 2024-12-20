@@ -12,6 +12,93 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-1"></div> <!-- 여백 -->
+            <div class="col-10">
+                <div class="d-flex">
+                <!--
+                <span>태그로 타이틀을 옆에 붙이려 하였으나 줄바꿈 형태로 나온다면, 감싸고 있는 <div>태그에 class="d-flex"를 준다.
+                위 방법이 안되면 CSS에 가서 디자인을 만들어 줘야한다.
+                -->
+                <img src="images/mlogo.png" width="40px" height="40px" alt="로고이미지"><span><h2>영화정보 사이트</h2></span>
+                </div>
+                <!-- 영화정보 목록 -->
+                <!-- 디자인 작업후 Controller에서 전달받는 변수로 적용 -->
+                <!-- model.addAttribute("movieDTOS", ) -->
+                <!--
+                메소드명 선언 : is~(해당값이 맞냐) - true/false
+                              set~(값을 받아서 변수에 저장), get~(변수에서 값을 읽어온다.)
+                 -->
+                <th:block th:if="${#lists.isEmpty(movieDTOS)}"> <!-- 받아온 값이 없으면 -->
+                    <p>등록된 영화가 없습니다.</p>
+                </th:block>
+                <th:block th:unless="${#lists.isEmpty(movieDTOS)}"> <!-- 받아온 값이 있으면 -->
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr th:each="data:${movieDTOS}"> <!-- 목록이 반복출력 -->
+                                <!-- 그림크기 기본적으로 150px, 200px, 250px, 300px로 사용하니 이중에서 맞추어 쓰면 된다. -->
+                                <td style="width: 20%"> <!-- 포스터가 존재하는 경우, 존재하지 않는 경우 -->
+                                    <th:block th:if="${data.poster == null}"> <!-- 그림파일이 없으면 출력 -->
+                                        <img src="images/no_image.jpg" width="250px" height="200px">
+                                    </th:block>
+                                    <th:block th:unless="${data.poster == null}"> <!-- 그림파일이 있으면 출력 -->
+                                        <img th:src="@{/upload/} + ${data.poster}" width="250px" height="200px">
+                                    </th:block>
+                                </td> <!-- 영화 포스터 -->
+                                <td style="width: 80%"> <!-- 영화 정보 -->
+                                    <h3>
+                                        <a style="text-decoration: none; color: black" th:href="@{/read(code=${data.code})}" th:text="${data.name}">범죄도시</a>
+                                    </h3>
+                                    <p >주연 : <span th:text="${data.actor}">마동석</span></p>
+                                    <p>감독 : <span th:text="${data.director}">이상용</span></p>
+                                    <span class="badge bg-primary" th:text="${data.genre}">한국</span>
+                                    <span class="badge bg-secondary" th:text="${data.nation}">액션</span>
+                                    <p>개봉일 : <span th:text="${data.opendate}">2024-05-01</span></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <ul class="pagination">
+                            <li class="page-item" th:unless="${startPage==1}"> <!-- 시작페이지번호가 1이 아니면 출력 -->
+                                <a class="page-link" th:href="@{/list(page=1)}">시작</a>
+                            </li>
+                            <li class="page-item" th:unless="${crrentPage==1}"> <!-- 현재페이지번호가 1페이지가 아니면 출력 -->
+                                <a class="page-link" th:href="@{/list(page=${prevPage})}">이전</a>
+                            </li>
+                            <th:block th:each="num:${#numbers.sequence(startPage, endPage, 1)}"> <!-- 또는 span태그 이용 가능 -->
+                                <!-- 현재 위치가 아닌 페이지 번호 -->
+                                <li class="page-item active" th:unless="${num==currentPage}">
+                                    <a class="page-link" th:href="@{/list(page=${num})}" th:text="${num}">1</a>
+                                </li>
+                                <!-- 현재 위치의 페이지 번호는 활성화 -->
+                                <li class="page-item active" th:if="${num==currentPage}">
+                                    <a class="page-link active" th:href="@{/list(page=${num})}" th:text="${num}"></a>
+                                    <!-- 직접출력은 [[${num}]]사용 -->
+                                </li>
+                            </th:block>
+                            <li class="page-item" th:unless="${crrentPage>=lastpage}"> <!-- 현재페이지번호가 마지막과 같지 않으면 출력 -->
+                                <a class="page-link" th:href="@{/list(page=${nextPage})}">다음</a>
+                            </li>
+                            <li class="page-item" th:unless="${endPage==lastPage}"> <!-- 끝페이지번호가 마지막페이지번호와 같지 않으면 출력 -->
+                                <a class="page-link" th:href="@{/list(page=${lastPage})}">끝</a>
+                            </li>
+                        </ul>
+                    </div>
+                </th:block>
+                <div class="d-flex justify-content-end">
+                    <!--
+                    스크립트 구동
+                    <button type="button" class="btn btn-primary">신규 영화등록</button>
+                    -->
+                    <!-- 맵핑처리 페이지이동(이걸로 하는게 나음) -->
+                    <a th:href="@{/register}" class="btn btn-primary">신규 영화등록</a>
+                </div>
+                <!-- 영화정보 목록 -->
+            </div>
+            <div class="col-1"></div> <!-- 여백 -->
+        </div>
+    </div>
 </body>
 </html>
