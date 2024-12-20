@@ -101,6 +101,12 @@
                                      -->
                                     <input type="file" style="width: 500px" class="form-control" name="imagefile">
                                     <img th:src="@{/upload/} + ${movieDTO.poster}" width="250px" height="200px">
+                                    <!--
+                                        등록과는 별개로 아래 코드의 poster의 정보도 같이 넘겨줘야 그냥 수정진행했을때
+                                        사진이 날아가지않고 그대로 다시 저장 된다.
+                                        새로 저장시에는 기존 poster 데이터가 날아가고 위에 코드로 새로운 이미지가 저장된다.
+                                    -->
+                                    <input type="hidden" name="poster" th:field="*{poster}">
                                 </td>
                             </tr>
                             </tbody>
